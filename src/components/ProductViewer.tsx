@@ -6,7 +6,9 @@ import MacbookModel14 from "./models/Macbook-14";
 import MacbookModel16 from "./models/Macbook-16";
 import Macbook14 from "./models/Macbook-14";
 import Macbook16 from "./models/Macbook-16";
-import StudioLights from "./StudioLights.tsx";
+import StudioLights from "./three/StudioLights.tsx";
+import ModelSwitcher from "./three/ModelSwitcher.tsx";
+import {useMediaQuery} from "react-responsive";
 
 // Props for SceneSetup component
 interface SceneSetupProps {
@@ -33,6 +35,8 @@ const SceneSetup: React.FC<SceneSetupProps> = ({children}) => {
 
 const ProductViewer = () => {
     const {color, setColor, scale, setScale} = useMacBookStore();
+
+    const isMobile = useMediaQuery({query: '(max-width: 1024px)'});
     return (
         <section id={'product-viewer'}>
             <h2>Take a closer look.</h2>
@@ -85,7 +89,7 @@ const ProductViewer = () => {
                     }}
                 >
                     <StudioLights/>
-                    <MacbookModel14 scale={0.06} position={[0, 0, 0]}/>
+                    {/*<MacbookModel14 scale={0.06} position={[0, 0, 0]}/>*/}
 
                     {/*<SceneSetup>*/}
                     {/*    <group scale={[scale, scale, scale]} position={[0, -1, 0]}>*/}
@@ -96,7 +100,7 @@ const ProductViewer = () => {
                     {/*        )}*/}
                     {/*    </group>*/}
                     {/*</SceneSetup>*/}
-                    <OrbitControls enableZoom={false}/>
+                    <ModelSwitcher scale={isMobile ? scale - 0.03 : scale} isMobile={isMobile}/>
                 </Canvas>
             </div>
         </section>
