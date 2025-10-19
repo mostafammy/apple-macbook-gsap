@@ -1,7 +1,7 @@
 import {useEffect, useRef} from "react";
 
 const Hero = () => {
-    const videoRef = useRef(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(()=>{
         if(videoRef.current) videoRef.current.playbackRate = 2;
