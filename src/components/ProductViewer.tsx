@@ -6,6 +6,7 @@ import MacbookModel14 from "./models/Macbook-14";
 import MacbookModel16 from "./models/Macbook-16";
 import Macbook14 from "./models/Macbook-14";
 import Macbook16 from "./models/Macbook-16";
+import StudioLights from "./StudioLights.tsx";
 
 // Props for SceneSetup component
 interface SceneSetupProps {
@@ -83,6 +84,7 @@ const ProductViewer = () => {
                         far: 100,
                     }}
                 >
+                    <StudioLights/>
                     <MacbookModel14 scale={0.06} position={[0, 0, 0]}/>
 
                     {/*<SceneSetup>*/}
