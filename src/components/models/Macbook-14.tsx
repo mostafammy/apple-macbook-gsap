@@ -43,11 +43,14 @@ function MacbookModel14({...props}: MacbookModel14Props) {
             {/* Main Body */}
             <mesh
                 geometry={nodes.Object_10.geometry}
+                material={materials.material_0}
                 rotation={[Math.PI / 2, 0, 0]}
             />
 
             {/* Screen */}
             <mesh
+                material={materials.screen}
+                material-map={texture}
                 geometry={nodes.Object_123.geometry}
                 rotation={[Math.PI / 2, 0, 0]}
             >
