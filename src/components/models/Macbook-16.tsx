@@ -39,6 +39,8 @@ interface MacbookModel16Props {
 function MacbookModel16({...props}: MacbookModel16Props) {
     const {nodes, materials, scene} = useGLTF('/models/macbook-16-transformed.glb') as unknown as GLTFResult;
     const texture = useTexture('/screen.png');
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.needsUpdate = true;
     const {color} = useMacBookStore();
 
     useEffect(() => {
