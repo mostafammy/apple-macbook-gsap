@@ -8,23 +8,44 @@ Source: https://sketchfab.com/3d-models/macbook-pro-m3-16-inch-2024-8e34fc2b3031
 Title: macbook pro M3 16 inch 2024
 */
 
-import React, {useEffect} from 'react'
+import {useEffect} from 'react'
 import {useGLTF, useVideoTexture} from '@react-three/drei'
-import useMacbookStore from "../../store/index.js";
-import {noChangeParts} from "../../constants/index.js";
-import {Color} from "three";
+import useMacbookStore from "../../store";
+import {noChangeParts} from "../../constants";
+import * as THREE from "three";
 
-function MacbookModel(props) {
-    const { color, texture, } = useMacbookStore();
-    const { nodes, materials, scene} = useGLTF('/models/macbook-transformed.glb')
+// Type for the GLTF result
+interface GLTFResult {
+    nodes: {
+        [key: string]: THREE.Mesh;
+    };
+    materials: {
+        [key: string]: THREE.Material;
+    };
+    scene: THREE.Group;
+}
+
+interface MacbookModelProps {
+    scale?: number | [number, number, number];
+    position?: [number, number, number];
+    rotation?: [number, number, number];
+}
+
+function MacbookModel({...props}: MacbookModelProps) {
+    const { color, texture } = useMacbookStore();
+    const { nodes, materials, scene } = useGLTF('/models/macbook-transformed.glb') as unknown as GLTFResult;
 
     const screen = useVideoTexture(texture)
 
     useEffect(() => {
         scene.traverse((child) => {
-            if (child.isMesh) {
-                if (!noChangeParts.includes(child.name)) {
-                    child.material.color = new Color(color);
+            const mesh = child as THREE.Mesh;
+            if (mesh.isMesh) {
+                if (!noChangeParts.includes(mesh.name)) {
+                    const material = mesh.material as THREE.MeshStandardMaterial;
+                    if (material && material.color) {
+                        material.color = new THREE.Color(color);
+                    }
                 }
             }
         });
