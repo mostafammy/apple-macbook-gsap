@@ -10,25 +10,25 @@ Title: macbook pro M3 16 inch 2024
 
 import {useGLTF, useTexture} from '@react-three/drei';
 import * as THREE from 'three';
-import useMacBookStore from "../../store";
 import {useEffect} from "react";
 import {noChangeParts} from "../../constants";
+import useMacBookStore from "../../store";
 
 
 // Type for the GLTF result
-type GLTFResult = {
+interface GLTFResult {
     nodes: {
         [key: string]: THREE.Mesh;
     };
     materials: {
         [key: string]: THREE.Material;
     };
+    scene: THREE.Group;
 };
 
 interface MacbookModel14Props {
     color?: string;
     scale?: number | [number, number, number];
-    position?: [number, number, number];
     rotation?: [number, number, number];
     // Add other THREE.Object3D properties that you actually need
     // For example:
@@ -42,15 +42,19 @@ function MacbookModel14({...props}: MacbookModel14Props) {
     const texture = useTexture('/screen.png');
     const {color} = useMacBookStore();
 
-    useEffect(()=>{
-        scene.traverse((child)=>{
-            if(child.isMesh){
-                if(!noChangeParts.includes(child.name)){
-                    child.material.color = new THREE.Color(color);
+    useEffect(() => {
+        scene.traverse((child) => {
+            const mesh = child as THREE.Mesh;
+            if (mesh.isMesh) {
+                if (!noChangeParts.includes(mesh.name)) {
+                    const material = mesh.material as THREE.MeshStandardMaterial;
+                    if (material && material.color) {
+                        material.color = new THREE.Color(color);
+                    }
                 }
             }
-        })
-    },[color, scene]);
+        });
+    }, [color, scene]);
 
     return (
         <group {...props} dispose={null}>

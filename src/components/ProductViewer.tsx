@@ -1,37 +1,11 @@
 import useMacBookStore from "../store";
 import clsx from "clsx";
 import {Canvas} from "@react-three/fiber";
-import {Environment, OrbitControls} from "@react-three/drei";
-import MacbookModel14 from "./models/Macbook-14";
-import MacbookModel16 from "./models/Macbook-16";
-import Macbook14 from "./models/Macbook-14";
-import Macbook16 from "./models/Macbook-16";
 import StudioLights from "./three/StudioLights.tsx";
 import ModelSwitcher from "./three/ModelSwitcher.tsx";
 import {useMediaQuery} from "react-responsive";
 
-// Props for SceneSetup component
-interface SceneSetupProps {
-    children: React.ReactNode;
-}
 
-// Simple environment and lighting setup
-const SceneSetup: React.FC<SceneSetupProps> = ({children}) => {
-    return (
-        <>
-            <ambientLight intensity={0.5}/>
-            <directionalLight
-                position={[10, 10, 5]}
-                intensity={1}
-                castShadow
-                shadow-mapSize-width={2048}
-                shadow-mapSize-height={2048}
-            />
-            <Environment preset="city"/>
-            {children}
-        </>
-    );
-};
 
 const ProductViewer = () => {
     const {color, setColor, scale, setScale} = useMacBookStore();

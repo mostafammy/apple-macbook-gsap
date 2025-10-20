@@ -21,6 +21,7 @@ type GLTFResult = {
     materials: {
         [key: string]: THREE.Material;
     };
+    scene: THREE.Group;
 };
 
 interface MacbookModel16Props {
@@ -40,15 +41,19 @@ function MacbookModel16({...props}: MacbookModel16Props) {
     const texture = useTexture('/screen.png');
     const {color} = useMacBookStore();
 
-    useEffect(()=>{
-        scene.traverse((child)=>{
-            if(child.isMesh){
-                if(!noChangeParts.includes(child.name)){
-                    child.material.color = new THREE.Color(color);
+    useEffect(() => {
+        scene.traverse((child) => {
+            const mesh = child as THREE.Mesh;
+            if (mesh.isMesh) {
+                if (!noChangeParts.includes(mesh.name)) {
+                    const material = mesh.material as THREE.MeshStandardMaterial;
+                    if (material && material.color) {
+                        material.color = new THREE.Color(color);
+                    }
                 }
             }
-        })
-    },[color, scene]);
+        });
+    }, [color, scene]);
 
     return (
         <group
