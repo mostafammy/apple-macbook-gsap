@@ -8,6 +8,7 @@ import ShowCase from "./components/ShowCase.tsx";
 import Performance from "./components/Performance.tsx";
 import Features from "./components/Features.tsx";
 import Highlights from "./components/Highlights.tsx";
+import Footer from "./components/Footer.tsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,6 +22,7 @@ export const App = (): JSX.Element => {
             <Performance/>
             <Features/>
             <Highlights/>
+            <Footer/>
         </main>
     );
 }
