@@ -4,12 +4,16 @@ import gsap from "gsap";
 import {useRef} from "react";
 
 const ShowCase = () => {
+    const rootRef = useRef<HTMLElement>(null);
     const maskRef = useRef<HTMLImageElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
+
+    const reduceMotion = useMediaQuery({query: '(prefers-reduced-motion: reduce)'});
+
     const isTablet = useMediaQuery({query: '(max-width: 1024px)'});
 
     useGSAP(() => {
-        if (!isTablet) {
+        if (!isTablet && !reduceMotion) {
             const timeline = gsap.timeline(
                 {
                     scrollTrigger: {
@@ -25,21 +29,23 @@ const ShowCase = () => {
             timeline.to(
                 maskRef.current,
                 {
-                    transform: 'scale(1.1)',
-                    // ease: 'power3.out'
+                    // transform: 'scale(1.1)',
+                    scale: 1.1,
+                    ease: 'none'
                 }).to(contentRef.current, {
                 opacity: 1,
                 y: 0,
-                ease: 'power1.out'
+                ease: 'none'
             })
             return () => {
+                timeline.scrollTrigger?.kill();
                 timeline.kill();
             };
         }
-    }, [isTablet]);
+    }, {dependencies: [isTablet], scope: rootRef});
 
     return (
-        <section id={'showcase'}>
+        <section ref={rootRef} id={'showcase'}>
             <div className={'media'}>
                 <video src={'/videos/game.mp4'} loop={true} muted playsInline autoPlay/>
                 <div className={'mask'}>
