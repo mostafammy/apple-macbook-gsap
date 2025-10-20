@@ -26,7 +26,7 @@ const noChangeParts: string[] = [
     "Object_10",
 ];
 
-const performanceImages: { id: string, src: string }[] = [
+const performanceImages: { id: string, src: string, alt?: string }[] = [
     {id: "p1", src: "/performance1.png"},
     {id: "p2", src: "/performance2.png"},
     {id: "p3", src: "/performance3.png"},
@@ -36,7 +36,7 @@ const performanceImages: { id: string, src: string }[] = [
     {id: "p7", src: "/performance7.png"},
 ];
 
-const performanceImgPositions: { id: string, left?: number, right?: number, bottom: number }[] = [
+const performanceImgPositions: { id: string, left?: number, right?: number, bottom: number, transform?: string }[] = [
     {
         id: "p1",
         left: 5,
