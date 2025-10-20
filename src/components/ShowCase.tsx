@@ -1,12 +1,15 @@
 import {useMediaQuery} from "react-responsive";
 import {useGSAP} from "@gsap/react";
 import gsap from "gsap";
+import {useRef} from "react";
 
 const ShowCase = () => {
+    const maskRef = useRef<HTMLImageElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
     const isTablet = useMediaQuery({query: '(max-width: 1024px)'});
 
-    useGSAP(()=>{
-        if (!isTablet){
+    useGSAP(() => {
+        if (!isTablet) {
             const timeline = gsap.timeline(
                 {
                     scrollTrigger: {
@@ -19,29 +22,31 @@ const ShowCase = () => {
                     }
                 }
             );
-            timeline.
-            to(
-                '.mask img',
+            timeline.to(
+                maskRef.current,
                 {
-                transform: 'scale(1.1)',
-                // ease: 'power3.out'
-            }).to('.content',{
+                    transform: 'scale(1.1)',
+                    // ease: 'power3.out'
+                }).to(contentRef.current, {
                 opacity: 1,
                 y: 0,
                 ease: 'power1.out'
             })
+            return () => {
+                timeline.kill();
+            };
         }
-    },[isTablet]);
+    }, [isTablet]);
 
     return (
         <section id={'showcase'}>
             <div className={'media'}>
                 <video src={'/videos/game.mp4'} loop={true} muted playsInline autoPlay/>
                 <div className={'mask'}>
-                    <img src={'/mask-logo.svg'} alt={'M4 Mask'}/>
+                    <img ref={maskRef} src={'/mask-logo.svg'} alt={'M4 Mask'}/>
                 </div>
             </div>
-            <div className={'content'}>
+            <div ref={contentRef} className={'content'}>
                 <div className={'wrapper'}>
                     <div className={'lg:max-w-md'}>
                         <h2>Rocket Ship</h2>
@@ -50,15 +55,18 @@ const ShowCase = () => {
                             <p>
                                 Introducing {" "}
                                 <span className={'text-white'}>
-                                    M4, the next generation Of Apple Silicon
+                                    M4, the next generation of Apple Silicon
                                 </span>
                                 . M4 Powers
                             </p>
                             <p>
-                                it drive Apple Intelligence On iPad Pro, so you can write, create, and accomplish more with ease. All in a design that's unbelievably thin, light, and powerful.
+                                it drives Apple Intelligence On iPad Pro, so you can write, create, and accomplish more
+                                with ease. All in a design that's unbelievably thin, light, and powerful.
                             </p>
                             <p>
-                                A brand-new display engine delivers breathtaking precision, color accuracy, and brightness. And a next-gen GPU with hardware-accelerated ray tracing brings console-level graphics to your fingertips.
+                                A brand-new display engine delivers breathtaking precision, color accuracy, and
+                                brightness. And a next-gen GPU with hardware-accelerated ray tracing brings
+                                console-level graphics to your fingertips.
                             </p>
                             <p className={'text-primary'}>
                                 Learn more about Apple Intelligence
