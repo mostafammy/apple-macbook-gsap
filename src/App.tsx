@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ShowCase from "./components/ShowCase.tsx";
 import Performance from "./components/Performance.tsx";
 import Features from "./components/Features.tsx";
+import Highlights from "./components/Highlights.tsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +20,7 @@ export const App = (): JSX.Element => {
             <ShowCase/>
             <Performance/>
             <Features/>
+            <Highlights/>
         </main>
     );
 }
