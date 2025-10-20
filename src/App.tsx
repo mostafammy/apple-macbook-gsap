@@ -4,6 +4,7 @@ import Hero from "./components/Hero.tsx";
 import ProductViewer from "./components/ProductViewer.tsx";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ShowCase from "./components/ShowCase.tsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,6 +14,7 @@ export const App = (): JSX.Element => {
             <NavBar/>
             <Hero/>
             <ProductViewer/>
+            <ShowCase/>
         </main>
     );
 }
