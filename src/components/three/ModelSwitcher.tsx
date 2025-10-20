@@ -75,8 +75,8 @@ const ModelSwitcher = ({scale, isMobile}: { scale: number, isMobile: boolean }) 
         snap: true,
         speed: 1,
         zoom: 1,
-        polar: [-Math.PI / 4, Math.PI / 4],
-        azimuth: [-Math.PI / 2, Math.PI / 2],
+        polar: [-Math.PI / 4, Math.PI / 4] as [number, number],
+        azimuth: [-Math.PI / 2, Math.PI / 2] as [number, number],
         config: { mass: 1, tension: 0, friction: 26 }
     };
     
