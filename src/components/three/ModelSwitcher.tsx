@@ -46,7 +46,10 @@ const ModelSwitcher = ({scale, isMobile}: { scale: number, isMobile: boolean }) 
     const smallMcbookRef = useRef(null);
     const largeMcbookRef = useRef(null);
 
-    const showLargeMacbook = scale === 0.08 || scale === 0.05;
+    const SCALE_LARGE_DESKTOP = 0.08;
+    const SCALE_LARGE_MOBILE = 0.05;
+
+    const showLargeMacbook = scale === SCALE_LARGE_DESKTOP || scale === SCALE_LARGE_MOBILE;
 
     useGSAP(() => {
         if (showLargeMacbook) {
@@ -91,7 +94,7 @@ const ModelSwitcher = ({scale, isMobile}: { scale: number, isMobile: boolean }) 
 
             <PresentationControls {...presentationControlsConfig}>
                 <group ref={largeMcbookRef} {...groupConfig}>
-                    <MacbookModel16 scale={isMobile ? 0.05 : 0.08} />
+                    <MacbookModel16 scale={isMobile ? SCALE_LARGE_MOBILE : SCALE_LARGE_DESKTOP} />
                 </group>
             </PresentationControls>
         </>
